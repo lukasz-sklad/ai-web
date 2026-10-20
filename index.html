@@ -4,7 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Craft AI — Hub Integracji AI dla Ekosystemu *craft</title>
-  <link data-trunk rel="rust" data-bin="ai-web" data-cargo-features="" />
+  
+<script type="module">
+import init, * as bindings from '/ai-web-7fef700fcf265ca0.js';
+const wasm = await init({ module_or_path: '/ai-web-7fef700fcf265ca0_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
   <style>
     html, body {
       margin: 0;
@@ -64,7 +75,7 @@
       to { transform: rotate(360deg); }
     }
   </style>
-</head>
+<link rel="modulepreload" href="/ai-web-7fef700fcf265ca0.js" crossorigin="anonymous" integrity="sha384-n7BCNLGwh5AecTxDcOb+VKk6yjEQReZfb4YfTU8S5OU/n8+1TbAqUbExODpy3/7l"><link rel="preload" href="/ai-web-7fef700fcf265ca0_bg.wasm" crossorigin="anonymous" integrity="sha384-5o2zt4O1OQMvBIEnaUeTB0aSTqMljwL+1EgwutbPEkF8X65UGam8QDPpmYlUeisp" as="fetch" type="application/wasm"></head>
 <body>
   <canvas id="craft_ai_canvas"></canvas>
   <div id="craft_ai_loading" role="status">
