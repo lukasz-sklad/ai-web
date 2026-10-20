@@ -6,8 +6,8 @@
   <title>Craft AI — Hub Integracji AI dla Ekosystemu *craft</title>
   
 <script type="module">
-import init, * as bindings from '/ai-web-2559b1546362aebb.js';
-const wasm = await init({ module_or_path: '/ai-web-2559b1546362aebb_bg.wasm' });
+import init, * as bindings from '/ai-web-6f3d4e5960b9d9d2.js';
+const wasm = await init({ module_or_path: '/ai-web-6f3d4e5960b9d9d2_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -72,7 +72,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
       to { transform: rotate(360deg); }
     }
   </style>
-<link rel="modulepreload" href="/ai-web-2559b1546362aebb.js" crossorigin="anonymous" integrity="sha384-5UHa57ni7yasLFWvW0SdZ8mIZQ2Bw41Ju+zV0ahWQo+zvLz7TG/ZYdze4uvWGZNQ"><link rel="preload" href="/ai-web-2559b1546362aebb_bg.wasm" crossorigin="anonymous" integrity="sha384-uYHfRIUr/UCUGGAQNfguhJkPGZmAU/BWcmEuUxJSW9K52oZ6yWc7s7gwj5xPumwn" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/ai-web-6f3d4e5960b9d9d2.js" crossorigin="anonymous" integrity="sha384-e/MIJMFLR67i/XW5Re6AU/PUSo+0q0nkqcg9yvRCoOblNmvaVxzOC9USCJfeLGb7"><link rel="preload" href="/ai-web-6f3d4e5960b9d9d2_bg.wasm" crossorigin="anonymous" integrity="sha384-X4RoF1H83SjrSEMKQIzQPe4IrHYTMCMJG0COY25pevkxNqGoihxfkeWvMckuJaXs" as="fetch" type="application/wasm"></head>
 <body>
   <canvas id="craft_ai_canvas"></canvas>
   <div id="craft_ai_loading" role="status">
@@ -95,6 +95,9 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
         if (loader) {
           loader.style.background = bg;
           loader.style.color = fg;
+        }
+        if (window.__craft_ai_repaint && typeof window.__craft_ai_repaint === "function") {
+          window.__craft_ai_repaint();
         }
       } catch (err) {
         console.warn("[Craft AI] Theme error:", err);
