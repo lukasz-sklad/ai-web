@@ -4,18 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Craft AI — Hub Integracji AI dla Ekosystemu *craft</title>
-  
-<script type="module">
-import init, * as bindings from '/ai-web-15df411b4cc2402c.js';
-const wasm = await init({ module_or_path: '/ai-web-15df411b4cc2402c_bg.wasm' });
-
-
-window.wasmBindings = bindings;
-
-
-dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
-
-</script>
+  <link data-trunk rel="rust" data-bin="ai-web" data-cargo-features="" />
   <style>
     html, body {
       margin: 0;
@@ -29,6 +18,8 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
       touch-action: none;
     }
     #craft_ai_canvas {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       display: block;
@@ -46,19 +37,20 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
       justify-content: center;
       background: #151617;
       z-index: 100;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
     }
     .spinner {
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       border: 4px solid rgba(168, 85, 247, 0.2);
       border-top-color: #a855f7;
       border-radius: 50%;
       animation: spin 0.9s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
     .loading-title {
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 600;
       color: #f8fafc;
       letter-spacing: -0.02em;
@@ -72,16 +64,24 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
       to { transform: rotate(360deg); }
     }
   </style>
-<link rel="modulepreload" href="/ai-web-15df411b4cc2402c.js" crossorigin="anonymous" integrity="sha384-hFmPFO4Mf7RsTK1pb1U/KUAZCHBIa2UqO8zG6vVFedQB/RUeDSFAynaONXd107Z+"><link rel="preload" href="/ai-web-15df411b4cc2402c_bg.wasm" crossorigin="anonymous" integrity="sha384-qGxeHa3hfafupC0L12tKheX+5a93L+DB46Ppdd2XI5P4WN9iLImlqdt74B+xxEOI" as="fetch" type="application/wasm"></head>
+</head>
 <body>
   <canvas id="craft_ai_canvas"></canvas>
   <div id="craft_ai_loading" role="status">
     <div class="spinner"></div>
-    <div class="loading-title">Craft AI Integrations</div>
-    <div class="loading-sub">Ładowanie modułów modeli i narzędzi…</div>
+    <div class="loading-title">Craft AI XXII</div>
+    <div class="loading-sub">Ładowanie silnika modeli i modułów WebAssembly…</div>
   </div>
 
   <script>
+    function hideLoader() {
+      const loader = document.getElementById("craft_ai_loading");
+      if (loader && loader.parentNode) {
+        loader.remove();
+      }
+    }
+    window.addEventListener("TrunkApplicationStarted", hideLoader);
+    setTimeout(hideLoader, 1500);
     function setCraftAiTheme(targetTheme) {
       const isLight = targetTheme === "light";
       const isSepia = targetTheme === "sepia";
